@@ -56,7 +56,7 @@ class CrashEventHandler(FileSystemEventHandler):
 
 # 配置监听  
 def get_path(target_dir):
-    return os.popen(f"find {target_dir} -name 'crashes' -type d").read()
+    return os.popen(f"find {target_dir} -name 'crashes' -type d").read().strip().split('\n')
 
 def watch_crash_directories(root_dir=target_dir):  
     init_db()  # 初始化数据库  
