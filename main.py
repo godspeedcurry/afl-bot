@@ -55,17 +55,17 @@ class CrashEventHandler(FileSystemEventHandler):
             conn.close()  
 
 # 配置监听  
+def get_path(target_dir):
+    return os.popen(f"find {target_dir} -name 'crashes' -type d").read()
+
 def watch_crash_directories(root_dir=target_dir):  
     init_db()  # 初始化数据库  
     observer = Observer()  
+
     # 遍历所有out开头的文件夹  
-    for dirpath, dirnames, filenames in os.walk(root_dir):  
-        for dirname in dirnames:  
-            if dirname.startswith('out'):  
-                crashes_path = os.path.join(dirpath, dirname, 'crashes')  
-                if os.path.exists(crashes_path):  
-                    event_handler = CrashEventHandler()  
-                    observer.schedule(event_handler, path=crashes_path, recursive=False)  
+    for crashes_path in get_path(root_dir):  
+        event_handler = CrashEventHandler()  
+        observer.schedule(event_handler, path=crashes_path, recursive=False)  
 
     observer.start()  
     try:  
