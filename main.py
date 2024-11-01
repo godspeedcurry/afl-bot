@@ -5,7 +5,7 @@ import sqlite3
 from urllib.parse import quote
 from watchdog.observers import Observer  
 from watchdog.events import FileSystemEventHandler  
-from config import key
+from config import key, target_dir
 import urllib.parse  
 
 # 配置Bark推送  
@@ -55,7 +55,7 @@ class CrashEventHandler(FileSystemEventHandler):
             conn.close()  
 
 # 配置监听  
-def watch_crash_directories(root_dir='/Users/test/exploit/afl-bot'):  
+def watch_crash_directories(root_dir=target_dir):  
     init_db()  # 初始化数据库  
     observer = Observer()  
     # 遍历所有out开头的文件夹  
