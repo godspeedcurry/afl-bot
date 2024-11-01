@@ -63,7 +63,8 @@ def watch_crash_directories(root_dir=target_dir):
     observer = Observer()  
 
     # 遍历所有out开头的文件夹  
-    for crashes_path in get_path(root_dir):  
+    for crashes_path in get_path(root_dir): 
+        print(crashes_path) 
         event_handler = CrashEventHandler()  
         observer.schedule(event_handler, path=crashes_path, recursive=False)  
 
